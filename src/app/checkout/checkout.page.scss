@@ -1,0 +1,39 @@
+.empty-cart img {
+  display: block;
+  margin: 0 auto;
+  margin-top: 45%;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.no-gap {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.text-oflow-lg {
+  display: inline-block;
+}
+
+.cart-image {
+  height: 60px;
+  padding: 5px;
+}
+
+.x-small {
+  font-size: x-small !important;
+}
+
+.bottom-bar {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: #ffffff;
+  z-index: 999;
+}
+
+.bottom-space {
+  padding: 35px;
+}

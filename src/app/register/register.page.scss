@@ -1,0 +1,38 @@
+.head {
+  padding: 0 !important;
+  margin: 0 !important;
+  font-weight: 800;
+}
+
+.top-nav {
+  padding-top: 20vh !important;
+}
+
+.padding {
+  padding: 26px !important;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.login-form {
+  padding-top: 25px !important;
+}
+
+.icon-padding {
+  padding-right: 8px;
+}
+
+.no-gap {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.bottom-bar {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: transparent;
+  z-index: 999;
+}

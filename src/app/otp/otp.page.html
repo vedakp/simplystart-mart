@@ -1,0 +1,47 @@
+<ion-content [fullscreen]="true">
+  <!-- Nav Bar -->
+
+  <div class="top-nav">
+    <ion-grid class="padding">
+      <ion-row>
+        <ion-col
+          size="12"
+          class="animate__animated animate__fadeIn animate__faster"
+        >
+          <ion-text color="dark">
+            <h1 class="head" color="dark">
+              {{ 'Verification Code' | translate }}
+            </h1>
+          </ion-text>
+        </ion-col>
+
+        <ion-col
+          size="12"
+          class="animate__animated animate__fadeIn animate__faster"
+        >
+          <ion-text color="dark">
+            <h6 class="head" color="dark">
+              {{ 'Please type the verification code sent to' | translate
+              }} <ion-text color="dark">+91 9876543210</ion-text>
+            </h6>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="padding">
+      <ion-item>
+        <ion-input type="text" class="otp-field" maxlength="4" minlength="4" (ionChange)="checkOtp()" [(ngModel)]="otp" autofocus="true"></ion-input>
+      </ion-item>
+
+      <ion-button
+        color="primary"
+        routerLink="/change-password"
+        size="large"
+        class="ion-text-capitalize medium ion-margin-top"
+        expand="full"
+        >{{ 'Verify' | translate }}</ion-button
+      >
+    </ion-grid>
+  </div>
+</ion-content>

@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'My Addresses' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngFor="let address of addresses;">
+    <ion-item (click)="makePrimary(address.id)" class="animate__animated animate__slideInUp animate__faster" >
+      <ion-avatar slot="start">
+        <ion-icon size="large" name="{{ address?.icon }}"></ion-icon>
+      </ion-avatar>
+      <ion-badge *ngIf="primaryAddress == address.id" color="primary" slot="end">{{ 'PRIMARY' | translate }}</ion-badge>
+      <ion-label>
+        <h2>{{ address?.name }}</h2>
+        <h3>{{ address?.line_1 }}</h3>
+        <p>{{ address?.line_2 }}</p>
+        <p>{{ address?.primary_phone }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

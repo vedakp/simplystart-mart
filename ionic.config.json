@@ -1,0 +1,7 @@
+{
+  "name": "gomart",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

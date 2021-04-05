@@ -1,0 +1,202 @@
+<ion-content [fullscreen]="true">
+  <div class="top-bar animate__animated animate__fadeIn animate__faster">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" class="ion-text-left ion-padding">
+          <h1 class="no-gap">
+            <ion-icon
+              routerLink="/home"
+              color="dark"
+              name="chevron-back-outline"
+            ></ion-icon>
+          </h1>
+        </ion-col>
+        <ion-col size="6" class="ion-text-right ion-padding">
+          <h1 class="no-gap">
+            <ion-icon
+              routerLink="/home/tabs/tab3"
+              color="dark"
+              name="bag-handle-outline"
+            ></ion-icon>
+          </h1>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Large Banners Card -->
+  <ion-grid class="animate__animated animate__fadeIn animate__faster">
+    <ion-slides *ngIf="currentProduct && currentProduct[1] && currentProduct[1].images"
+      [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }"
+    >
+      <ion-slide
+        *ngFor="let image of currentProduct[1].images"
+        class="product-view"
+      >
+        <ion-col>
+          <ion-img class="card-image" src="{{ image }}"></ion-img>
+        </ion-col>
+      </ion-slide>
+    </ion-slides>
+  </ion-grid>
+
+  <div class="ion-padding animate__animated animate__fadeIn animate__faster">
+    <ion-grid class="ion-padding" class="bottom-bar-space">
+      <ion-row>
+        <ion-col class="no-gap">
+          <ion-text color="dark">
+            <h4 class="no-gap">{{ currentProduct[0]?.productName }}</h4>
+            <small class="ion-text-start text-muted no-gap"
+              >{{ currentProduct[0]?.shortName }}</small
+            >
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="no-gap">
+          <!-- <ion-chip color="success">
+            <ion-text class="xx-small" color="success"
+              >{{ 'Extra ₹3500 Off' | translate }}</ion-text
+            >
+          </ion-chip>
+
+          <ion-chip color="danger">
+            <ion-text class="xx-small" color="danger"
+              >{{ 'EMI Starts from' | translate }} ₹451</ion-text
+            >
+          </ion-chip> -->
+
+            <ion-icon
+              class="fav_icon animate__animated animate__bounceIn animate__faster"
+              *ngIf="!is_fav"
+              (click)="addFav()"
+              color="danger"
+              name="heart-outline"
+            ></ion-icon>
+
+            <ion-icon
+              class="fav_icon animate__animated animate__bounceIn animate__faster"
+              *ngIf="is_fav"
+              (click)="addFav()"
+              color="danger"
+              name="heart"
+            ></ion-icon>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="no-gap">
+          <h4 class="ion-text-start no-gap" color="dark">
+            ₹{{ currentProduct[0]?.salesPrice }}
+            <small class="text-muted x-small"
+              ><del>₹{{ currentProduct[0]?.regularPrice }}</del></small
+            >
+            <ion-text color="danger"
+              ><b class="ion-float-right small"
+                >{{ currentProduct[0]?.off }}% Off</b
+              ></ion-text
+            >
+          </h4>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-padding-top" *ngIf="currentProduct && currentProduct[0] && currentProduct[0].productLongDescription">
+        <ion-col class="no-gap">
+          <ion-text color="dark">
+            <h6 class="no-gap ion-text-uppercase">{{ 'Product Description' | translate }}</h6>
+            <small class="ion-text-start text-muted no-gap ion-text-justify" [innerHTML]="currentProduct[0].productLongDescription"></small
+            >
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <!-- Card Title -->
+      <!-- <ion-row class="animate__animated animate__fadeIn animate__faster">
+        <ion-col size="9">
+          <ion-text color="dark">
+            <h6 class="ion-text-uppercase">{{ 'Related Products' | translate }}</h6>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="3" class="ion-text-end">
+          <ion-button
+            class="card-header-btn"
+            color="primary"
+            routerLink="/product-list"
+            size="small"
+            >{{ 'More' | translate }}</ion-button
+          >
+        </ion-col>
+      </ion-row> -->
+
+      <!-- Card Slides -->
+      <!-- <ion-slides
+        [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }"
+      >
+        <ion-slide
+          routerLink="/single-product-view"
+          *ngFor="let mobile of relatedProducts"
+          class="sm-cards"
+        >
+          <ion-col>
+            <ion-img
+              class="card-image"
+              src="{{ mobile?.productImage }}"
+            ></ion-img>
+            <div class="ion-padding-top ion-padding-bottom">
+              <h6 class="ion-text-start no-gap text-oflow-sm">
+                {{ mobile?.shortName }}
+              </h6>
+              <small
+                class="ion-text-start no-gap text-oflow-sm text-muted x-small"
+                >{{ mobile?.productName }}</small
+              >
+              <h6 class="ion-text-start small no-gap" color="dark">
+                ₹{{ mobile?.salesPrice }}
+
+                <small class="text-muted xx-small"
+                  ><del>₹{{ mobile?.regularPrice }}</del></small
+                >
+                <ion-text color="danger"
+                  ><b class="ion-float-right x-small"
+                    >{{ mobile?.off }}% Off</b
+                  ></ion-text
+                >
+              </h6>
+            </div>
+          </ion-col>
+        </ion-slide>
+      </ion-slides> -->
+    </ion-grid>
+  </div>
+
+  <div class="bottom-bar animate__animated animate__slideInUp animate__faster">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-button
+            color="dark"
+            (click)="addToCart()"
+            class="ion-text-uppercase small"
+            size="large"
+            expand="block"
+            >{{ 'Add to cart' | translate }}</ion-button
+          >
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-button
+            color="primary"
+            routerLink="/home/tabs/tab3"
+            class="ion-text-uppercase small"
+            size="large"
+            expand="block"
+            >{{ 'Buy now' | translate }}</ion-button
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'Notifications' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  
+  <ion-list>
+
+    <ion-item-sliding class="animate__animated animate__slideInUp animate__faster">
+    <ion-item-options side="end">
+      <ion-item-option (click)="makeRead()">Mark as read</ion-item-option>
+    </ion-item-options>
+
+    <ion-item>
+      <p>
+        Black Friday Upto 75% Off on all electronics and mobiles. Grab the deal
+        now.
+      </p>
+    </ion-item>
+  </ion-item-sliding>
+
+  <ion-item-sliding class="animate__animated animate__slideInUp animate__faster">
+    <ion-item-options side="end">
+      <ion-item-option (click)="makeRead()">Mark as read</ion-item-option>
+    </ion-item-options>
+    <ion-item>
+      <p>
+        Wooho! Sale is Back :) Hurry! Weekend sale is back. start shopping now.
+      </p>
+    </ion-item>
+  </ion-item-sliding>
+
+  <ion-item-sliding class="animate__animated animate__slideInUp animate__faster">
+    <ion-item-options side="end">
+      <ion-item-option (click)="makeRead()">Mark as read</ion-item-option>
+    </ion-item-options>
+    <ion-item>
+      <p>
+        Black Friday Upto 75% Off on all electronics and mobiles. Grab the deal
+        now. Use Coupon: BLFRI75
+      </p>
+    </ion-item>
+  </ion-item-sliding>
+
+  <ion-item-sliding class="animate__animated animate__slideInUp animate__faster">
+    <ion-item-options side="end">
+      <ion-item-option (click)="makeRead()">Mark as read</ion-item-option>
+    </ion-item-options>
+    <ion-item>
+      <p>
+        Wooho! Sale is Back :) Hurry! Weekend sale is back. start shopping now.
+      </p>
+    </ion-item>
+  </ion-item-sliding>
+  </ion-list>
+
+</ion-content>

@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'Account Settings' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item class="animate__animated animate__slideInUp animate__faster">
+      <ion-label>{{ 'App Push Notifications' | translate }}</ion-label>
+      <ion-toggle [(ngModel)]="enablePush"></ion-toggle>
+    </ion-item>
+
+    <ion-item class="animate__animated animate__slideInUp animate__faster" routerLink="/terms-and-conditions">
+      <ion-label>{{ 'Terms and conditions' | translate }}</ion-label>
+    </ion-item>
+
+    <ion-item class="animate__animated animate__slideInUp animate__faster" routerLink="/privacy-policy">
+      <ion-label>{{ 'Privacy policy' | translate }}</ion-label>
+    </ion-item>
+
+    <ion-item class="animate__animated animate__slideInUp animate__faster" routerLink="/refund-policy">
+      <ion-label>{{ 'Refund policy' | translate }}</ion-label>
+    </ion-item>
+
+    <ion-item class="animate__animated animate__slideInUp animate__faster" routerLink="/about">
+      <ion-label>{{ 'About' | translate }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<div class="bottom-bar">
+  <ion-grid>
+    <ion-button size="large" expand="full" color="danger">{{ 'Delete my account' | translate }}</ion-button>
+  </ion-grid>
+</div>

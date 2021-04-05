@@ -1,0 +1,71 @@
+<ion-header>
+    <ion-item>
+      <ion-label class="ion-padding">
+        <h1>{{ 'My Wishlist' | translate }}</h1>
+      </ion-label>
+      <ion-icon
+        class="ion-text-right"
+        slot="end"
+        color="dark"
+        name="bag-handle-outline"
+      >
+      </ion-icon>
+    </ion-item>
+</ion-header>
+
+<ion-content [fullscreen]="true" scroll="false" no-padding>
+
+  <div class="cart ion-padding-top" *ngIf="wishlist.length > 0">
+    <ion-list>
+      <ion-item *ngFor="let item of wishlist; let i=index;">
+        <ion-grid class="animate__animated animate__slideInUp animate__faster">
+          <ion-row>
+            <ion-col size="3" routerLink="/single-product-view">
+              <img class="round-edge" src="{{ item?.productImage }}" />
+            </ion-col>
+            <ion-col size="6" routerLink="/single-product-view">
+              <h6 class="text-oflow-lg no-gap">{{ item?.shortName }}</h6>
+              <p class="text-oflow-lg text-muted no-gap">{{ item?.brand }}</p>
+            </ion-col>
+            <ion-col size="3" class="ion-text-right">
+              <p class="no-gap">
+                <ion-icon
+                  class="ion-text-right text-muted"
+                  (click)="removeFromWishlist(i)"
+                  color="danger"
+                  name="heart"
+                ></ion-icon>
+              </p>
+              <small class="ion-text-uppercase no-gap ion-margin-top text-muted"
+                >{{ item?.off }}% Off</small
+              >
+              <p class="ion-text-uppercase no-gap x-small text-muted">
+                <del>{{ item?.regularPrice }}</del>
+              </p>
+              <h6 class="ion-text-right no-gap">₹ {{ item?.salesPrice }}</h6>
+            </ion-col>
+          </ion-row>
+          <ion-row> </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div
+    class="empty-wish animate__animated animate__fadeIn animate__faster"
+    *ngIf="wishlist.length == 0"
+  >
+    <img src="../../../assets/empty-wishlist.png" alt="" />
+    <h4 class="text-muted ion-text-center">{{ 'Wishlist is empty' | translate }}!</h4>
+    <br />
+    <div class="ion-text-center">
+      <ion-button
+        color="primary"
+        routerLink="/home"
+        class="ion-text-uppercase"
+        shape="round"
+        >{{ 'Start Shopping' | translate }}</ion-button
+      >
+    </div>
+  </div>
+</ion-content>

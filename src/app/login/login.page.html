@@ -1,0 +1,60 @@
+<ion-content [fullscreen]="true">
+  <!-- Nav Bar -->
+
+  <div class="top-nav">
+    <ion-grid class="padding">
+      <ion-row>
+        <ion-col class="animate__animated animate__fadeIn animate__faster">
+          <ion-text color="dark">
+            <h1 class="head" color="dark">{{ 'Welcome back' | translate }}!</h1>
+
+            {{ 'Signin to continue.' | translate }}
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="padding">
+      <ion-item>
+        <ion-input type="text" placeholder="{{ 'Email / Phone' | translate }}"
+          ><ion-icon class="icon-padding" name="mail-outline"></ion-icon
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="password" placeholder="{{ 'Password' | translate }}"
+          ><ion-icon class="icon-padding" name="lock-closed-outline"></ion-icon
+        ></ion-input>
+      </ion-item>
+      <ion-button
+        color="dark"
+        routerLink="/home"
+        size="large"
+        class="ion-text-capitalize medium ion-margin-top"
+        expand="full"
+        >{{ 'Login' | translate }}</ion-button
+      >
+
+      <ion-col>
+        <ion-text routerLink="/forget-password" class="ion-float-left ion-padding-top text-muted"
+          >{{ 'Forget Password' | translate }}?</ion-text
+        >
+      </ion-col>
+    </ion-grid>
+  </div>
+</ion-content>
+
+<div class="bottom-bar no-gap">
+  <ion-row class="no-gap">
+    <ion-grid size="12" class="no-gap">
+      <ion-button
+        color="primary"
+        routerLink="/register"
+        size="large"
+        class="ion-text-capitalize"
+        expand="full"
+        >{{ 'Create new account' | translate }}</ion-button
+      >
+    </ion-grid>
+  </ion-row>
+</div>

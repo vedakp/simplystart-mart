@@ -1,0 +1,32 @@
+.text-oflow-md {
+  display: inline-block;
+  width: 155px !important;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
+.no-gap {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.text-muted {
+  color: #6c757d !important;
+}
+.x-small {
+  font-size: x-small;
+}
+
+.small {
+  font-size: small;
+}
+
+.card-border {
+  border: 2px solid #f8f8f8;
+}
+
+.card-image {
+  pointer-events: none;
+  // border-radius: 18px;
+  // box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}

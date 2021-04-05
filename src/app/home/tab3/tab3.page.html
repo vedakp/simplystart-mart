@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-item>
+    <ion-label class="ion-padding">
+      <h1>{{ 'My Cart' | translate }}</h1>
+    </ion-label>
+    <ion-icon 
+      class="ion-text-right"
+      slot="end"
+      color="dark"
+      name="bag-handle-outline"
+    >
+    </ion-icon>
+  </ion-item>
+</ion-header>
+
+<ion-content [fullscreen]="true" scroll="false" no-padding>
+
+  <div class="cart ion-padding-top" *ngIf="cart.length > 0">
+    <ion-list>
+      <ion-item *ngFor="let item of cart; let i=index;">
+        <ion-grid class="animate__animated animate__slideInUp animate__faster">
+          <ion-row>
+            <ion-col size="3">
+              <img class="round-edge" src="{{ item?.productImage }}" />
+              <small class="ion-text-uppercase text-muted">
+                Qty: {{ item?.amount }}</small
+              >
+            </ion-col>
+            <ion-col size="6">
+              <h6
+                class="text-oflow-lg no-gap"
+                routerLink="/single-product-view"
+              >
+                {{ item?.shortName }}
+              </h6>
+              <p class="text-oflow-lg text-muted no-gap">{{ item?.brand }}</p>
+
+              <ion-row class="ion-margin-top">
+                <ion-icon
+                  (click)="lessQty(i)"
+                  size="small"
+                  name="remove-circle-outline"
+                ></ion-icon>
+                <span class="qty-padding">{{ item?.amount }}</span>
+                <ion-icon
+                  (click)="addQty(i)"
+                  size="small"
+                  name="add-circle-outline"
+                ></ion-icon>
+              </ion-row>
+            </ion-col>
+            <ion-col size="3" class="ion-text-right">
+              <ion-icon
+                class="ion-text-right text-muted ion-margin-bottom"
+                (click)="removeFromCart(i)"
+                name="trash-outline"
+              ></ion-icon>
+              <p
+                class="ion-text-uppercase no-gap x-small ion-margin-top text-muted"
+              >
+                {{ item?.regularPrice }} X {{ item?.amount }}
+              </p>
+              <h6 class="ion-text-right no-gap">
+                ₹ {{ item?.regularPrice*item?.amount }}
+              </h6>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+
+    <div class="bottom-bar animate__animated animate__fadeIn animate__faster">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <small class="text-muted ion-text-uppercase no-gap">{{ 'Subtotal' | translate }}</small>
+            <ion-text color="dark"
+              ><h1 class="no-gap">₹ {{ totalCost }}</h1></ion-text
+            >
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-button
+              color="primary"
+              routerLink="/checkout"
+              class="ion-text-uppercase"
+              size="large"
+              expand="block"
+              >{{ 'Checkout' | translate }}</ion-button
+            >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+  <div
+    class="empty-cart animate__animated animate__fadeIn animate__faster"
+    *ngIf="cart.length == 0"
+  >
+    <img src="../../../assets/empty-cart.svg" alt="" />
+    <h4 class="text-muted ion-text-center">{{ 'Cart is empty' | translate }}!</h4>
+    <br />
+    <div class="ion-text-center">
+      <ion-button
+        color="primary"
+        routerLink="/home"
+        class="ion-text-uppercase"
+        shape="round"
+        >{{ 'Start Shopping' | translate }}</ion-button
+      >
+    </div>
+  </div>
+</ion-content>

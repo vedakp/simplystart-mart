@@ -1,0 +1,52 @@
+<ion-header>
+  
+  <ion-item>
+    <ion-buttons slot="start">
+      <h1 class="no-gap">
+        <ion-icon
+          routerLink="/home"
+          color="dark"
+          name="chevron-back-outline"
+        ></ion-icon>
+      </h1>
+    </ion-buttons>
+    <ion-label class="ion-padding">
+      <h1>{{ categoryTitle | translate }}</h1>
+    </ion-label>
+    <ion-icon
+      class="ion-text-right"
+      slot="end"
+      color="dark"
+      name="bag-handle-outline"
+    >
+    </ion-icon>
+  </ion-item>
+</ion-header>
+
+<ion-content scroll="false" no-padding>
+
+  <ion-grid>
+    <ion-row class="animate__animated animate__fadeIn animate__faster">
+      <ion-col size-xs="6" size-sm="6" size-md="3" size-lg="3" class="card-border" *ngFor="let product of products"
+        [routerLink]="['/single-product-view',product.product_id]">
+        <ion-img class="card-image" src="{{ product?.productImage }}"></ion-img>
+        <div class="ion-padding-top">
+          <h6 class="ion-text-start no-gap text-oflow-md">{{ product?.shortName }} }}</h6>
+          <small class="ion-text-start no-gap text-oflow-md text-muted x-small">{{ product.name }}</small>
+          <h6 class="ion-text-start no-gap" color="dark">
+            ₹{{ product?.regularPrice }}
+
+            <small class="text-muted"><del>₹{{ product?.salesPrice }}</del></small>
+            <ion-text color="danger"><b class="ion-float-right small">{{ product?.off }}% Off</b></ion-text>
+          </h6>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" (click)="doFilter()" slot="fixed">
+    <ion-fab-button color="dark">
+      <ion-icon name="filter-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
