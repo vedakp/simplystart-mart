@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-order-success',
@@ -6,8 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./order-success.page.scss'],
 })
 export class OrderSuccessPage implements OnInit {
+  orderId = "";
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) { 
 
-  constructor() { }
+    this.orderId = this.route.snapshot.paramMap.get('id')!;
+  }
 
   ngOnInit() {
   }

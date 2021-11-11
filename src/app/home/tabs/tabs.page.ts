@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
+import { WishlistService } from 'src/app/services/wishlist.service';
 
 @Component({
   selector: 'app-tabs',
@@ -15,15 +16,18 @@ export class TabsPage {
   cart = "bag-handle-outline";
   account = "person-outline";
   cartItemCount :any = 0;
+  wishlistItemCount : any =0;
   
   constructor(public router:Router,
-    public cartService:CartService
+    public cartService:CartService,
+    public wishlistService:WishlistService
     ) { this.router.events.subscribe((val) => this.changeActiveIcon()) }
 
 
   ngOnInit() {
     this.changeActiveIcon();
     this.cartItemCount = this.cartService.getCartItemCount();
+    this.wishlistItemCount = this.wishlistService.getWishlistItemsCount();
   }
 
   changeActiveIcon(){

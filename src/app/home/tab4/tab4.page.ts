@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActionSheetController } from "@ionic/angular";
+import { AuthService } from "src/app/services/auth.service";
+import { CommonfunctionService } from "src/app/services/commonfunction.service";
 import { TranslateConfigService } from "../../translate-config.service";
 
 @Component({
@@ -12,7 +14,9 @@ export class Tab4Page implements OnInit {
 
   constructor(
     private translateConfigService: TranslateConfigService,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    public auth:AuthService,
+    public appComm:CommonfunctionService
   ) {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
   }
@@ -25,6 +29,15 @@ export class Tab4Page implements OnInit {
      this.selectedLanguage = localStorage.getItem('appLanguage');
     }
     this.translateConfigService.setLanguage(this.selectedLanguage);
+
+    this.appComm.getLocalstorageItem('user').then((user:any)=>{
+      user = JSON.parse(user);
+      console.log("User ",user);
+      this.auth.getUserData(user['email']).then((res)=>{
+        console.log('User data',res);
+      });
+      
+    })
   } 
 
   updateLanguage(lang) {

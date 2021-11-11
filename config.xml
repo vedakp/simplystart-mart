@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.shivamits.gomart" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>gomart</name>
+<widget id="com.shivamits.gomart" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Simply Grocery</name>
     <description>Online eCommerce App.</description>
-    <author email="support@shivamits.com" href="https://shivamits.com/">UI by Shivam ITS</author>
+    <author email="contact@simplystart.in" href="https://simplystart.in/">Developed by Simplystart</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

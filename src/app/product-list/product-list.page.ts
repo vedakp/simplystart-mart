@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ActionSheetController } from "@ionic/angular";
+import { CommonfunctionService } from "../services/commonfunction.service";
 import { WoocommerceService } from "../services/woocommerce.service";
 
 @Component({
@@ -17,6 +18,7 @@ export class ProductListPage implements OnInit {
   constructor(public actionSheetController: ActionSheetController,
     public wc:WoocommerceService,
     public activatedRoute:ActivatedRoute,
+    public appCom:CommonfunctionService,
     public route:Router
     ) {}
 
@@ -37,7 +39,9 @@ export class ProductListPage implements OnInit {
   }
 
   getProducts(id){
+    this.appCom.showLoader();
     this.wc.getProductsByCategories(id).then((productsRes:any)=>{
+      this.appCom.hideLoader();
         console.log("Products ",productsRes)
         productsRes.map((item)=>{
             var prodObj = {
@@ -46,14 +50,16 @@ export class ProductListPage implements OnInit {
                 "productName": item.name,
                 "brand": "Bagger IN",
                 "shortName": item.name,
-                "off": parseInt(((item.sale_price/item.regular_price)*100).toString()),
+                "off": (100 - parseInt(((item.sale_price/item.regular_price)*100).toString())),
                 "productShortDescription": item.short_description,
-                "regularPrice": item.regular_price,
-                "salesPrice": item.sale_price
+                "regularPrice": item.sale_price,
+                "salesPrice": item.regular_price
             }
             this.products.push(prodObj);
         })
         
+      },err=>{
+        this.appCom.hideLoader();
       })
   }
 

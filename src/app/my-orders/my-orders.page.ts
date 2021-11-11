@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WoocommerceService } from '../services/woocommerce.service';
 
 @Component({
   selector: 'app-my-orders',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyOrdersPage implements OnInit {
 
-  constructor() { }
+  myOrders : any = [];
+  constructor(
+    public wc:WoocommerceService
+  ) { }
 
   ngOnInit() {
+    this.wc.getOrder().then(res=>{
+      console.log("My Orders",res);
+      this.myOrders = res;
+    })
   }
 
 }

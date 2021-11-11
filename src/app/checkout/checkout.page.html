@@ -6,35 +6,6 @@
 
 <ion-content [fullscreen]="true">
   <div class="cart" *ngIf="cart.length > 0">
-    <ion-grid class="ion-padding">
-      <h4>{{ 'Delivery Address' | translate }}</h4>
-    </ion-grid>
-
-    <ion-list class="animate__animated animate__fadeIn animate__faster">
-      <ion-radio-group value="address">
-        <ion-item>
-          <ion-label
-            ><small class="ion-text-uppercase text-muted">{{ 'HOME' | translate }}</small>
-            <h2>Mr. Surendhar</h2>
-            <h3>849 Koontz Lane</h3>
-            <p>Burbank, California - 91502</p>
-            <p>+1 818-840-1357</p>
-          </ion-label>
-          <ion-radio slot="start" color="dark" value="address_1"></ion-radio>
-        </ion-item>
-
-        <ion-item>
-          <ion-label
-            ><small class="ion-text-uppercase text-muted">{{ 'WORK' | translate }}</small>
-            <h2>Mr. Karthikeyan</h2>
-            <h3>866 Tannie Way</h3>
-            <p>Burbank, California - 91502</p>
-            <p>+1 818-123-7745</p>
-          </ion-label>
-          <ion-radio slot="start" color="dark" value="address_2"></ion-radio>
-        </ion-item>
-      </ion-radio-group>
-    </ion-list>
 
     <ion-grid class="ion-padding">
       <h4>{{ 'Item(s) in cart' | translate }}</h4>
@@ -64,10 +35,10 @@
               <p
                 class="ion-text-uppercase no-gap x-small ion-margin-top text-muted"
               >
-                {{ item?.salesPrice }} X {{ item?.quantity }}
+              {{ item?.regularPrice }} X {{ item?.amount }}
               </p>
               <h6 class="ion-text-right no-gap">
-                ₹ {{ item?.salesPrice*item?.quantity }}
+                ₹ {{ item?.regularPrice*item?.amount }}
               </h6>
             </ion-col>
           </ion-row>
@@ -109,18 +80,10 @@
     <ion-grid class="ion-padding">
       <h4>{{ 'Payment method' | translate }}</h4>
       <ion-list>
-        <ion-radio-group value="pay_mode">
-          <ion-item>
-            <ion-label> <h4>Cash on delivery</h4> </ion-label>
-            <ion-radio slot="start" color="dark" value="cod"></ion-radio>
-          </ion-item>
-          <ion-item>
-            <ion-label> <h4>Netbanking</h4> </ion-label>
-            <ion-radio slot="start" color="dark" value="netbanking"></ion-radio>
-          </ion-item>
-          <ion-item>
-            <ion-label> <h4>PayPal</h4> </ion-label>
-            <ion-radio slot="start" color="dark" value="paytm"></ion-radio>
+        <ion-radio-group [(ngModel)]="paymentMethod">
+          <ion-item *ngFor="let item of paymentGatways">
+            <ion-label> <h4>{{item.title}}</h4> </ion-label>
+            <ion-radio slot="start" color="dark" value="{{item.id+':'+item.title}}"></ion-radio>
           </ion-item>
         </ion-radio-group>
       </ion-list>
@@ -140,11 +103,12 @@
 
           <ion-col size="6">
             <ion-button
+              [disabled]="!paymentMethod"
               color="primary"
-              routerLink="/order-validate"
               class="ion-text-uppercase"
               size="default"
               expand="block"
+              (click)="confirmOrder()"
               >{{ 'Place Order' | translate }}</ion-button
             >
           </ion-col>

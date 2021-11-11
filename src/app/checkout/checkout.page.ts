@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
+import { CartService } from '../services/cart.service';
+import { CommonfunctionService } from '../services/commonfunction.service';
+import { WoocommerceService } from '../services/woocommerce.service';
 
 @Component({
   selector: 'app-checkout',
@@ -8,103 +12,132 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class CheckoutPage implements OnInit {
 
-  constructor(public toastController: ToastController, public alertController: AlertController) { }
+  paymentGatways: any = [];
+  constructor(
+    public toastController: ToastController,
+    public alertController: AlertController,
+    public cartService: CartService,
+    public wc: WoocommerceService,
+    public appComm: CommonfunctionService,
+    public router: Router
+  ) { }
 
-  
-  ngOnInit(){
+
+  ngOnInit() {
     this.doTotalCalculation();
   }
 
-  totalCost = 0;
+  totalCost: any = 0;
   grandTotal = 0;
   shippingCost = 45;
-  cart = [
-    {
-        "product_id":1,
-        "productImage":"https://m.media-amazon.com/images/S/aplus-media/sota/39ed8e8d-01b0-4d86-8cb0-305b4869bb48.__CR288,248,496,496_PT0_SX300_V1___.jpg",
-        "productName":"Women Fashion Handbags Tote Bag Shoulder Bag",
-        "brand":"Bagger IN",
-        "shortName":"Women Fashion Handbag",
-        "off":15,
-        "quantity":1,
-        "productLongDescription":"A14 Bionic, the fastest chip in a smartphone. An edge-to-edge OLED display. Ceramic Shield with four times better drop performance. And Night mode on every camera. iPhone 12 has it all — in two perfect sizes.",
-        "productShortDescription":"A14 Bionic, the fastest chip in a smartphone. An edge-to-edge OLED display.",
-        "regularPrice":980,
-        "salesPrice":850
-    },
-    {
-        "product_id":2,
-        "productImage":"https://i.pinimg.com/474x/b5/b4/e0/b5b4e08c1b97e8ed0c403bebda20d789.jpg",
-        "productName":"Halife Women's Long Sleeve Boat Neck Off Shoulder Blouse Tops",
-        "brand":"Halife US",
-        "off":45,
-        "quantity":2,
-        "shortName":"Women's Long Sleeve",
-        "productLongDescription":"A14 Bionic rockets past every other smartphone chip. The Pro camera system takes low-light photography to the next level — with an even bigger jump on iPhone 12 Pro Max. And Ceramic Shield delivers four times better drop performance. Let’s see what this thing can do.",
-        "productShortDescription":"A14 Bionic rockets past every other smartphone chip.",
-        "regularPrice":1200,
-        "salesPrice":999
-    }];
+  cart = [];
+  baseProducts:any = [];
+  paymentMethod='';
 
-    lessQty(index){
-      if(this.cart[index].quantity > 0){
-        this.cart[index].quantity = this.cart[index].quantity-1;
-        this.doTotalCalculation(); 
-      }
-      if(this.cart[index].quantity == 0){
-       this.removeFromCart(index);
-      }  
-         
-    }
+  ionViewDidEnter() {
+    this.getPaymentGateways();
+    this.cart = this.cartService.getCart();
+    setTimeout(() => {
+      this.doTotalCalculation();
+    }, 500)
+  }
 
-    addQty(index){ 
-      if(this.cart[index].quantity >= 0 && this.cart[index].quantity <= 25){
-        this.cart[index].quantity = this.cart[index].quantity+1;
+  doTotalCalculation() {
+    this.totalCost = 0;
+    console.log("Cart", this.cart);
+    for (let i = 0; i < this.cart.length; i++) {
+      this.totalCost = Number(this.totalCost) + Number(((this.cart[i].regularPrice) * (this.cart[i].amount)));
+      this.totalCost = parseFloat(this.totalCost).toFixed(2);
+      this.grandTotal = Number(this.shippingCost) + Number(this.totalCost);
+
+      let newCartData = {}; 
+        newCartData['product_id'] = this.cart[i].product_id;
+        newCartData['price'] = parseInt(this.cart[i].price);
+        newCartData['quantity'] = this.cart[i].quantity;
+        this.baseProducts.push(newCartData);
     }
+  }
+
+  async toastAlert(msg, index) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
+    this.cart.splice(index, 1);
     this.doTotalCalculation();
-    }
+  }
 
-    doTotalCalculation(){
-      this.totalCost = 0;
-      this.grandTotal = 0;
-      for(let item of this.cart){
-        this.totalCost += (item.salesPrice * item.quantity);
+  getPaymentGateways() {
+    // this.appComm.showLoader();
+    this.wc.getPaymentGateways().then((res:any) => {
+      console.log("Payment Gateway", res);
+      for(let i = 0;i<res.length;i++){
+        if(res[i].enabled){
+          this.paymentGatways.push(res[i]);
+        }
       }
-      this.grandTotal = (this.shippingCost + this.totalCost);
-    }
+      // this.appComm.hideLoader();
+    }, (err) => {
+      // this.appComm.hideLoader();
+    })
+  }
 
-  
-    async removeFromCart(i) {
-      const alert = await this.alertController.create({
-        header: 'Do you want to remove this item?',
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {
-              console.log('Action cancelled');
+  confirmOrder() {
+    return new Promise((resolve, reject) => {
+      this.appComm.getLocalstorageItem('user').then((user:any)=>{
+        user = JSON.parse(user);
+        console.log("User ",user);
+        let userId = user['store_id'];
+        var orderObj = {
+          payment_method : this.paymentMethod.split(":")[0],
+          payment_method_title : this.paymentMethod.split(":")[1],
+          customer_id : userId,
+          "billing": {
+            "first_name": "John",
+            "last_name": "Doe",
+            "address_1": "969 Market",
+            "address_2": "",
+            "city": "San Francisco",
+            "state": "CA",
+            "postcode": "94103",
+            "country": "US",
+            "email": "john.doe@example.com",
+            "phone": "(555) 555-5555"
+          },
+          "shipping": {
+            "first_name": "John",
+            "last_name": "Doe",
+            "address_1": "969 Market",
+            "address_2": "",
+            "city": "San Francisco",
+            "state": "CA",
+            "postcode": "94103",
+            "country": "US"
+          },
+          "shipping_lines": [
+            {
+              "method_id": "flat_rate",
+              "method_title": "Flat Rate",
+              "total": "10.00"
             }
-          }, {
-            text: 'Yes!',
-            handler: () => {
-              this.toastAlert("Item removed from cart.", i);
-            }
+          ],
+          line_items:this.cart.map(ele=>{
+            return { product_id : ele.product_id, quantity : ele.quantity}
+          })
+        }
+        this.wc.placeOrder(orderObj).then((respData) => {
+          console.log("Place Orders ",respData);
+          // this.storage.clear();
+          // this.storage.set('currentOrderData', respData);
+          if(respData['id']){
+            this.router.navigateByUrl('/order-success/'+respData['id']);
+            this.appComm.setLocalstorageItem('cart',{});
           }
-        ]
+        }).catch((error) => {
+          console.log('Problem with placing order', error);
+        });
       });
-  
-      await alert.present();
-    }
-
-    async toastAlert(msg, index) {
-      const toast = await this.toastController.create({
-        message: msg,
-        duration: 2000
-      });
-      toast.present();
-      this.cart.splice(index, 1);
-      this.doTotalCalculation(); 
-    }
-     
+    })
+  }
 }

@@ -1,8 +1,75 @@
+<ion-content>
 
-<ion-content class="ion-padding">
+  <div class="top-bar animate__animated animate__fadeIn animate__faster">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1" class="ion-text-left ion-padding">
+          <h1 class="no-gap">
+            <ion-icon
+              routerLink="/home"
+              color="dark"
+              name="chevron-back-outline"
+            ></ion-icon>
+          </h1>
+        </ion-col>
+        <ion-col size="9" class="ion-text-center">
+          <h4>Search Products</h4>
+        </ion-col>
+        <ion-col size="1" class="ion-text-right ion-padding">
+          <h1 class="no-gap">
+            <ion-icon
+              routerLink="/home/tabs/tab3"
+              color="dark"
+              name="bag-handle-outline"
+            ></ion-icon>
+          </h1>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
   
-  <ion-searchbar></ion-searchbar>
+  <ion-searchbar debounce="10" [(ngModel)]="search" (ionChange)="getProducts()" (ionClear)="reset()"></ion-searchbar>
 
-  <div class="center-result"><ion-text class="ion-text-center"><h6>Sorry, No results found!</h6></ion-text></div>
+  <ion-list>
+    <ion-item class="ion-padding" *ngFor="let item of products" [routerLink]="['/single-product-view',item.product_id]">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="item.productImage"></ion-img>
+      </ion-thumbnail>
+      <ion-label>{{item.productName}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="onSearch">
+    <ion-list>
+      <ion-list-header>
+        <ion-label>
+          <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+        </ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <!-- <div *ngIf="!products.length && !onSearch" class="center-result"><ion-text class="ion-text-center"><h6></h6></ion-text></div> -->
+
+  <div class="empty-cart animate__animated animate__fadeIn animate__faster" *ngIf="!products.length && !onSearch" >
+    <img src="../../assets/empty-cart.svg" alt="" />
+    <h4 class="text-muted ion-text-center">Sorry, No results found!</h4>
+    <br />
+  </div>
 
 </ion-content>

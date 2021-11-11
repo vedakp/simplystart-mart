@@ -12,11 +12,11 @@
     class="ion-padding animate__animated animate__slideInUp animate__faster"
   >
     <h6 class="text-muted">
-      {{ 'Your order will be delivered by' | translate }} Fri 01, Nov 2020.
+      {{ 'Your order is under process, will be confirmed soon' | translate }}
     </h6>
-    <p class="text-muted">{{ 'Order ID' | translate }}: ODR00124212150FF42</p>
+    <p class="text-muted">{{ 'Order ID' | translate }}: {{orderId?'#'+orderId:'NA'}}</p>
     <br />
-    <p class="text-muted">{{ 'Thank you for choosing GoMart' | translate }}!</p>
+    <p class="text-muted">{{ 'Thank you for choosing us!' | translate }}!</p>
   </ion-grid>
 
   <ion-grid>

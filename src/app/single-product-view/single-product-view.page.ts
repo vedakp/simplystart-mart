@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { CartService } from '../services/cart.service';
 import { CommonfunctionService } from '../services/commonfunction.service';
+import { WishlistService } from '../services/wishlist.service';
 import { WoocommerceService } from '../services/woocommerce.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class SingleProductViewPage implements OnInit {
     public activatedRoute:ActivatedRoute,
     public wc:WoocommerceService,
     public appComm:CommonfunctionService,
-    public cartService:CartService
+    public cartService:CartService,
+    public wishlistService : WishlistService
     ) {}
   
   is_fav = false;
@@ -44,10 +46,11 @@ relatedProducts = [
 
 
 ngOnInit() {
-
   this.activatedRoute.paramMap.subscribe((paramMap)=>{
     this.pId = paramMap.get('id');
+    this.appComm.showLoader();
     this.wc.getSingleProduct(this.pId).then(productRes=>{
+      this.appComm.hideLoader();
       console.log("Product ", productRes);
       this.currentProduct = [{ 
         "id":productRes['id'],
@@ -56,7 +59,7 @@ ngOnInit() {
         "productName": productRes['name'],
         "brand": "Bagger IN",
         "shortName": productRes['name'],
-        "off": parseInt(((productRes['sale_price']/productRes['regular_price'])*100).toString()),
+        "off": (100 - parseInt(((productRes['sale_price']/productRes['regular_price'])*100).toString())),
         "productLongDescription": productRes['short_description']?productRes['short_description']:'',
         "productShortDescription": productRes['short_description'],
         "regularPrice": productRes['regular_price'],
@@ -65,6 +68,8 @@ ngOnInit() {
         "images":productRes['images'].map((img)=> { return img.src })
       }];
       // this.getProductVariation();
+    },err=>{
+      this.appComm.hideLoader();
     })
   })
 }
@@ -96,11 +101,11 @@ getProductVariation(){
     if(this.is_fav == false){
       this.is_fav = true;
       this.toastAlert("Item added to wishlist.");
-      // this.cartService.addProduct(this.currentProduct[0]);
+      this.wishlistService.addToWishlistt(this.currentProduct[0]);
     }else{
       this.is_fav =false;
       this.toastAlert("Item removed from wishlist.");
-      // this.cartService.removeProduct(this.currentProduct[0]);
+      this.wishlistService.removeFromWishlist(this.currentProduct[0]);
     }
   }
 

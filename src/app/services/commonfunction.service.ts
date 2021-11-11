@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { REGEX } from './constants';
 
 @Injectable({
@@ -7,12 +7,26 @@ import { REGEX } from './constants';
 })
 export class CommonfunctionService {
 
+  loader:any;
   constructor(
-    public toastController: ToastController
+    public toastController: ToastController,
+    public loaderControler:LoadingController
   ) { }
 
   validateEmail(email) {
     return REGEX.email.test(String(email).toLowerCase());
+  }
+
+  async showLoader(){
+    this.loader = await this.loaderControler.create({
+      message: 'Please wait...'
+    });
+
+    await this.loader.present();
+  }
+
+  async hideLoader(){
+    this.loader.dismiss();
   }
 
   async showToast(message, showCancelbutton: boolean, position: "top" | "bottom" | "middle", duration = 5000) {

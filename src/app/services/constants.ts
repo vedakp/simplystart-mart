@@ -1,5 +1,5 @@
 export const constants = {
-    siteURL:'https://groceries.simplystart.in/',
+    siteURL:'https://groceries.simplystart.in',
     sitePath: '/wp-json/wp/v2/',
     woocomPath: '/wp-json/wc/v3/',
     jwtPath : '/wp-json/jwt-auth/v1/token/',
@@ -14,10 +14,13 @@ export const API_PATH = {
     REGISTER_CUSTOMER : constants.siteURL + constants.woocomPath + 'customers',
     LOGIN_CUSTOMER : constants.siteURL + constants.jwtPath,
     CUSTOMER_DATA : constants.siteURL + constants.woocomPath + 'customers',
+    MY_DATA : constants.siteURL + constants.sitePath + 'users',
     PRODUCTS : constants.siteURL + constants.woocomPath + 'products',
     CATEGORIES : constants.siteURL + constants.woocomPath + 'products/categories',
     TAGS : constants.siteURL + constants.woocomPath + 'products/tags',
-    POST : constants.siteURL + constants.sitePath + 'posts'
+    POST : constants.siteURL + constants.sitePath + 'posts',
+    PAYMENT_GATEWAY : constants.siteURL + constants.woocomPath + 'payment_gateways',
+    ORDERS : constants.siteURL + constants.woocomPath + 'orders',
 };
 
 export const REGEX = {

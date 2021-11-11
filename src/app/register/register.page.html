@@ -1,63 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content [fullscreen]="true">
   <!-- Nav Bar -->
 
   <div class="top-nav">
-    <form #registerform = "ngForm">
-    <ion-grid class="padding">
-      <ion-row>
-        <ion-col class="animate__animated animate__fadeIn animate__faster">
-          <ion-text color="dark">
-            <h1 class="head" color="dark">{{ 'Welcome' | translate }}!</h1>
-            {{ 'Create a new account.' | translate }}
+    <form #registerform="ngForm">
+      <ion-grid class="padding">
+        <ion-row>
+          <ion-col class="animate__animated animate__fadeIn animate__faster">
+            <ion-text color="dark">
+              <h1 class="head" color="dark">{{ 'Welcome' | translate }}!</h1>
+              {{ 'Create a new account.' | translate }}
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid class="padding login-form animate__animated animate__slideInUp animate__faster">
+        <ion-item>
+          <ion-input type="text" name="username" ngModel #uname="ngModel" [(ngModel)]=username required minlength="6"
+            placeholder="{{ 'Username' | translate }}">
+            <ion-icon class="icon-padding" name="at-outline"></ion-icon>
+          </ion-input>
+        </ion-item>
+        <ion-col *ngIf="uname.touched && !uname.valid">
+          <ion-text color="danger">
+            <p *ngIf="uname.errors.required">Please Enter Username</p>
+            <p *ngIf="uname.errors.minlength">Username should be minimum of 6 character letter</p>
           </ion-text>
         </ion-col>
-      </ion-row>
-    </ion-grid>
- 
-    <ion-grid
-      class="padding login-form animate__animated animate__slideInUp animate__faster"
-    >
-      <ion-item>
-        <ion-input type="text" name="username" ngModel #uname="ngModel" [(ngModel)] = username required minlength="6" placeholder="{{ 'Username' | translate }}"
-          ><ion-icon class="icon-padding" name="at-outline"></ion-icon
-        ></ion-input>
-      </ion-item>
-      <ion-col *ngIf="uname.touched && !uname.valid">
-        <ion-text color="danger">
-          <p *ngIf="uname.errors.required">Please Enter Username</p>
-          <p *ngIf="uname.errors.minlength">Username should be minimum of 6 character letter</p>
-        </ion-text>
-      </ion-col>
-      <ion-item>
-        <ion-input type="text" name="email" ngModel #uemail="ngModel" [(ngModel)] = email required  placeholder="{{ 'Email' | translate }}"
-          ><ion-icon class="icon-padding" name="mail-outline"></ion-icon
-        ></ion-input>
-      </ion-item>
-      <ion-col *ngIf="uemail.touched && !uemail.valid">
-        <ion-text color="danger">
-          <p>Please Enter Email Id</p>
-        </ion-text>
-      </ion-col>
-      <ion-item>
-        <ion-input type="password" name="password" ngModel #upass="ngModel" [(ngModel)] = password required placeholder="{{ 'Password' | translate }}"
-          ><ion-icon class="icon-padding" name="lock-closed-outline"></ion-icon
-        ></ion-input>
-      </ion-item>
-      <ion-col *ngIf="upass.touched && !upass.valid">
-        <ion-text color="danger">
-          <p>Please Enter Password</p>
-        </ion-text>
-      </ion-col>
-    </ion-grid>
-    <ion-button
-      color="tertiary"
-      routerLink="/home"
-      class="ion-text-capitalize ion-margin-top no-gap"
-      size="large"
-      expand="full"
-      [disabled]="!registerform.valid"
-      >{{ 'Signup' | translate }}</ion-button
-    >
+        <ion-item>
+          <ion-input type="text" [pattern]="emailRegex" name="email" ngModel #uemail="ngModel" [(ngModel)]=email required
+            placeholder="{{ 'Email' | translate }}">
+            <ion-icon class="icon-padding" name="mail-outline"></ion-icon>
+          </ion-input>
+        </ion-item>
+        <ion-col *ngIf="uemail.touched && !uemail.valid">
+          <ion-text color="danger">
+            <p>Please Enter Email Id</p>
+          </ion-text>
+        </ion-col>
+        <ion-item>
+          <ion-input type="password" name="password" ngModel #upass="ngModel" [(ngModel)]=password required
+            placeholder="{{ 'Password' | translate }}">
+            <ion-icon class="icon-padding" name="lock-closed-outline"></ion-icon>
+          </ion-input>
+        </ion-item>
+        <ion-col *ngIf="upass.touched && !upass.valid">
+          <ion-text color="danger">
+            <p>Please Enter Password</p>
+          </ion-text>
+        </ion-col>
+      </ion-grid>
+      <ion-button color="tertiary" (click)="register()" class="ion-text-capitalize ion-margin-top no-gap" size="large"
+        expand="full" [disabled]="!registerform.valid">{{ 'Signup' | translate }}</ion-button>
     </form>
   </div>
 

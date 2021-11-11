@@ -1,8 +1,8 @@
 {
   "name": "gomart",
-  "version": "1.0.4",
-  "author": "Shivam ITS",
-  "homepage": "https://shivamits.com/",
+  "version": "0.0.1",
+  "author": "Simplystart",
+  "homepage": "https://simplystart.in/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
