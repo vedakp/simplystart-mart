@@ -8,18 +8,33 @@
 </ion-header>
 
 <ion-content>
-  <ion-list *ngFor="let address of addresses;">
-    <ion-item (click)="makePrimary(address.id)" class="animate__animated animate__slideInUp animate__faster" >
-      <ion-avatar slot="start">
+  <ion-list *ngIf="address && address.billing">
+    <ion-item class="animate__animated animate__slideInUp animate__faster" >
+    <!-- <ion-item (click)="makePrimary(address.id)" class="animate__animated animate__slideInUp animate__faster" > -->
+      <!-- <ion-avatar slot="start">
         <ion-icon size="large" name="{{ address?.icon }}"></ion-icon>
-      </ion-avatar>
-      <ion-badge *ngIf="primaryAddress == address.id" color="primary" slot="end">{{ 'PRIMARY' | translate }}</ion-badge>
-      <ion-label>
-        <h2>{{ address?.name }}</h2>
-        <h3>{{ address?.line_1 }}</h3>
-        <p>{{ address?.line_2 }}</p>
-        <p>{{ address?.primary_phone }}</p>
+      </ion-avatar> -->
+      <!-- <ion-badge *ngIf="primaryAddress == address.id" color="primary" slot="end">{{ 'PRIMARY' | translate }}</ion-badge> -->
+      <h3 *ngIf="address && address.billing">Billing Address</h3>
+      <ion-label *ngIf="address && address.billing">
+        <h2>{{ address.billing.first_name ? address.billing.first_name  : '' }} {{ address.billing.last_name ? address.billing.last_name  : '' }}</h2>
+        <h3>{{ address.billing.address_1 ? address.billing.address_1 : ''}}</h3>
+        <p>{{ address.billing.address_2 ? address.billing.address_2 : '' }}</p>
+        <p>{{ address.billing.phone ? address.billing.phone : ''}}</p>
       </ion-label>
+      <ion-button *ngIf="address && address.billing && !address.billing.address_1" (click)="addBillingAddress()">Set Billing address</ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="address && address.shipping">
+    <ion-item class="animate__animated animate__slideInUp animate__faster" >
+      <h3 *ngIf="address && address.shipping">Shipping Address</h3>
+      <ion-label>
+        <h2>{{ address.shipping.first_name ? address.shipping.first_name  : '' }} {{ address.shipping.last_name ? address.shipping.last_name  : '' }}</h2>
+        <h3>{{ address.shipping.address_1 ? address.shipping.address_1 : ''}}</h3>
+        <p>{{ address.shipping.address_2 ? address.shipping.address_2 : '' }}</p>
+        <p>{{ address.shipping.phone ? address.shipping.phone : '' }}</p>
+      </ion-label>
+      <ion-button *ngIf="address && address.shipping && !address.shipping.address_1" (click)="addShippingAddress()">Set Shipping address</ion-button>
     </ion-item>
   </ion-list>
 </ion-content>

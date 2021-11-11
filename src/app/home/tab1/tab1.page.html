@@ -5,7 +5,7 @@
     <ion-row class="animate__animated animate__fadeIn animate__faster">
       <ion-col size="8">
         <ion-text color="light">
-          {{ 'Hello' | translate }}, Ryan!
+          {{ 'Hello' | translate }}, {{auth && auth.userData && auth.userData.name?auth.userData.name:''}}!
           <h1 class="no-gap" color="dark">{{ 'Welcome' | translate }}</h1>
         </ion-text>
       </ion-col>
@@ -168,15 +168,15 @@
   </ion-grid>
 
   <!-- Large Banners Card -->
-  <!-- <ion-grid class="animate__animated animate__fadeIn animate__faster">
+  <ion-grid class="animate__animated animate__fadeIn animate__faster">
     <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
-      <ion-slide *ngFor="let card of [0,1,2]" class="lg-cards" routerLink="/single-product-view">
+      <ion-slide *ngFor="let card of [0,1,2]" class="lg-cards">
         <ion-col>
           <ion-img class="card-image round-edge" src="../../../assets/products/banner{{card}}.png"></ion-img>
         </ion-col>
       </ion-slide>
     </ion-slides>
-  </ion-grid> -->
+  </ion-grid>
 
   <!-- Products Area -->
 

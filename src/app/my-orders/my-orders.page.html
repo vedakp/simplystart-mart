@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item
+    <ion-item *ngFor = "let order of myOrders"
       routerLink="/track-order"
       class="animate__animated animate__slideInUp animate__faster"
     >
@@ -17,13 +17,14 @@
         <img src="../../../assets/products/410wL1a4LML._SY300_QL70_ML2_.jpg" />
       </ion-avatar>
       <ion-label>
-        <h2>Titan Mens Watch</h2>
-        <h3>Ordered on 22/10/2020 12:55 PM</h3>
-        <ion-text color="danger"><p>Cancelled</p></ion-text>
+        <h2>{{order['line_items'][0]['name']}}</h2>
+        <h3>Ordered on {{order.date_created | date:'short' }}</h3>
+        <ion-text *ngIf="order.status == '!completed'" color="warning"><p>{{order.status}}</p></ion-text>
+        <ion-text *ngIf="order.status == 'completed'" color="success"><p>{{order.status}}</p></ion-text>
       </ion-label>
     </ion-item>
 
-    <ion-item
+    <!-- <ion-item
       routerLink="/track-order"
       class="animate__animated animate__slideInUp animate__faster"
     >
@@ -77,6 +78,6 @@
         <h3>Ordered on 25/01/2020 01:51 PM</h3>
         <ion-text color="warning"><p>Order Placed</p></ion-text>
       </ion-label>
-    </ion-item>
+    </ion-item> -->
   </ion-list>
 </ion-content>

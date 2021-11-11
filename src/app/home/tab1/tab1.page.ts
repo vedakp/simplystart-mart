@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { WoocommerceService } from 'src/app/services/woocommerce.service';
 
 @Component({
@@ -8,11 +9,6 @@ import { WoocommerceService } from 'src/app/services/woocommerce.service';
     styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit{
-
-
-    constructor(private router: Router,
-        public wc:WoocommerceService
-    ) { }
 
     // categories = {
     //     "categories": [
@@ -115,6 +111,12 @@ export class Tab1Page implements OnInit{
         }
     ];
 
+    constructor(private router: Router,
+        public wc:WoocommerceService,
+        public auth:AuthService
+    ) { }
+
+
     newArrivals = [
         // {
         //     "product_id": 1,
@@ -164,10 +166,10 @@ export class Tab1Page implements OnInit{
                     "productName": item.name,
                     "brand": "Bagger IN",
                     "shortName": item.name,
-                    "off": parseInt(((item.sale_price/item.regular_price)*100).toString()),
+                    "off": (100 - parseInt(((item.sale_price/item.regular_price)*100).toString())),
                     "productShortDescription": item.short_description,
-                    "regularPrice": item.regular_price,
-                    "salesPrice": item.sale_price
+                    "regularPrice": item.sale_price,
+                    "salesPrice": item.regular_price
                 }
                 this.products.push(prodObj);
             })
@@ -187,8 +189,8 @@ export class Tab1Page implements OnInit{
                     "shortName": item.name,
                     "off": parseInt(((item.sale_price/item.regular_price)*100).toString()),
                     "productShortDescription": item.short_description,
-                    "regularPrice": item.regular_price,
-                    "salesPrice": item.sale_price
+                    "regularPrice": item.sale_price,
+                    "salesPrice": item.regular_price
                 }
                 this.newArrivals.push(prodObj);
             })

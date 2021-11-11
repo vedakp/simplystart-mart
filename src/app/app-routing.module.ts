@@ -11,6 +11,10 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
@@ -36,6 +40,10 @@ const routes: Routes = [
   },
   {
     path: 'order-success',
+    loadChildren: () => import('./order-success/order-success.module').then( m => m.OrderSuccessPageModule)
+  },
+  {
+    path: 'order-success/:id',
     loadChildren: () => import('./order-success/order-success.module').then( m => m.OrderSuccessPageModule)
   },
   {

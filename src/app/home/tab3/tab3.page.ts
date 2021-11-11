@@ -45,10 +45,15 @@ export class Tab3Page implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.cart = this.cartService.getCart();
-    this.doTotalCalculation();
+    
   }
 
+  ionViewDidEnter(){
+    this.cart = this.cartService.getCart();
+    setTimeout(()=>{
+      this.doTotalCalculation();
+    },500)
+  }
 
   lessQty(index) {
     if (this.cart[index].amount > 0) {
@@ -65,8 +70,8 @@ export class Tab3Page implements OnInit {
     if (this.cart[index].amount >= 0 && this.cart[index].amount <= 25) {
       this.cart[index].amount = this.cart[index].amount + 1;
     }
-    this.doTotalCalculation();
     this.cartService.setCart(this.cart);
+    this.doTotalCalculation();
   }
 
   doTotalCalculation() {
@@ -95,6 +100,7 @@ export class Tab3Page implements OnInit {
           handler: () => {
             this.toastAlert("Item removed from cart.", i);
             this.cartService.removeProduct(this.cart[i]);
+            this.doTotalCalculation();
           }
         }
       ]
